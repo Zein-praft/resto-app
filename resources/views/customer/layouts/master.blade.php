@@ -1,4 +1,4 @@
-@include('customer.layouts.__header')
+@include('customer.layouts._header')
 
 <body>
 
@@ -11,7 +11,7 @@
 
 
     <!-- Navbar start -->
-    @include('customer.layouts.__navbar')
+    @include('customer.layouts._navbar')
     <!-- Navbar End -->
 
     <!-- Fruits Shop Start-->
@@ -19,7 +19,7 @@
     <!-- Fruits Shop End-->
 
     <!-- Footer Start -->
-    @include('customer.layouts.__footer')
+    @include('customer.layouts._footer')
     <!-- Footer End -->
 
 
