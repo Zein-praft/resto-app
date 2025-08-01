@@ -1,7 +1,7 @@
   <div class="container-fluid fixed-top">
       <div class="container px-0">
           <nav class="navbar navbar-light bg-white navbar-expand-xl">
-              <a href="#" class="navbar-brand">
+              <a href="/" class="navbar-brand"> <!-- Brand Logo  bisa /(agar bisa balik lewat logo ke home ) atau #(tidak bisa balik ke home logo) -->
                   <h1 class="text-primary display-6">Restoranku</h1>
               </a>
               <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
