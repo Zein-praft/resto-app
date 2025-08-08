@@ -1,5 +1,5 @@
 @extends('customer.layouts.master')
-{{-- wellll welll --}}
+
 @section('content')
     <div class="container-fluid py-5">
         <div class="container py-5">
@@ -34,7 +34,7 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border"
-                                            onclick="updateQty({{ $id }}, {{ max(1, $item['qty'] - 1) }})">
+                                            onclick="updateQty({{ $id }}, {{ $item['qty'] - 1 }})">
                                             <i class="fa fa-minus"></i>
                                         </button>
                                         <input type="text" readonly
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <div class="mb-0 mb-3">
+                        <div class="mb-3">
                             <a href="{{ route('checkout') }}"
                                 class="btn border-secondary py-3 text-primary text-uppercase mb-4" type="button">
                                 Lanjut ke Pembayaran
@@ -111,10 +111,32 @@
     </div>
 
     {{-- Script AJAX untuk update qty --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         function updateQty(id, qty) {
+            if (qty == null) {
+                fetch(`/cart/remove/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({}) // Jika butuh kirim data tambahan, isi di sini
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Berhasil
+                            console.log('Item removed');
+                            location.reload(); // Refresh halaman setelah berhasil menghapus item
+                            // Lakukan refresh atau update UI
+                        } else {
+                            // Gagal
+                            console.error('Failed to remove item');
+                        }
+                    })
+                return;
+            }
             $.ajax({
                 url: '/cart/update/' + id,
                 type: 'POST',
