@@ -45,7 +45,7 @@ class CartController extends Controller
         }
 
         session(['cart' => $cart]);
-        return redirect()->route('cart'); // cart.show jadi cart aja 
+        return redirect()->route('cart');
     }
 
     public function remove($id)
