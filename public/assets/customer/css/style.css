@@ -5,7 +5,7 @@
     visibility: hidden;
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
- }
+ }z
 
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
