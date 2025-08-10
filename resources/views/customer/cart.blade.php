@@ -52,9 +52,9 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;" class="form-remove">
                                         @csrf
-                                        <button type="submit" class="btn btn-md rounded-circle bg-light border mt-4">
+                                        <button type="button" class="btn btn-md rounded-circle bg-light border mt-4 btn-remove">
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
                                     </form>
@@ -112,31 +112,9 @@
 
     {{-- Script AJAX untuk update qty --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function updateQty(id, qty) {
-            if (qty == null) {
-                fetch(`/cart/remove/${id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({}) // Jika butuh kirim data tambahan, isi di sini
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Berhasil
-                            console.log('Item removed');
-                            location.reload(); // Refresh halaman setelah berhasil menghapus item
-                            // Lakukan refresh atau update UI
-                        } else {
-                            // Gagal
-                            console.error('Failed to remove item');
-                        }
-                    })
-                return;
-            }
             $.ajax({
                 url: '/cart/update/' + id,
                 type: 'POST',
@@ -149,5 +127,25 @@
                 }
             });
         }
+
+        // SweetAlert konfirmasi hapus
+        $(document).on('click', '.btn-remove', function(e) {
+            e.preventDefault();
+            let form = $(this).closest('form');
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah anda ingin menghapus pesanan ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 @endsection
